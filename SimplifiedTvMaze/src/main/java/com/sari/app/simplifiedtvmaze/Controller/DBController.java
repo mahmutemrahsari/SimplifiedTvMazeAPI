@@ -9,7 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+// Gjør data persist
+// API endepunter for å lagre,hente, osv. data i database
 @RestController
 @RequestMapping("/db")
 public class DBController {
@@ -18,7 +19,7 @@ public class DBController {
     public DBController(ShowRepository showRepository) {
         this.showRepository = showRepository;
     }
-
+    //Henter ut alle Showene fra databasen
     @GetMapping(value = "/shows")
     public ResponseEntity<List<Show>> getShows() {
         List<Show> shows = showRepository.findAll();
@@ -29,7 +30,7 @@ public class DBController {
             return ResponseEntity.ok(shows);
         }
     }
-
+    //Henter ut bare et Showet med gitte id-en fra databasen
     @GetMapping(value = "/show/{id}")
     public ResponseEntity<Show> getShowById(@PathVariable Long id) {
         Show show = showRepository.findById(id)
@@ -42,7 +43,7 @@ public class DBController {
         }
     }
 
-
+    //Lagrer bare en "Show" i databasen
     @PostMapping(value = "/save")
     public ResponseEntity<String> saveShow(@RequestBody @Valid Show show) {
         try {
@@ -52,7 +53,7 @@ public class DBController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save show");
         }
     }
-
+    //Oppdaterer Showet som har gitte id-en
     @PutMapping(value = "/update/{id}")
     public ResponseEntity<String> updateShow(@PathVariable Long id, @Valid @RequestBody Show updatedShow) {
         if (!showRepository.existsById(id)) {
@@ -72,7 +73,7 @@ public class DBController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update show");
         }
     }
-
+    // Sletter Showet med gitte id-en fra databasen
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteShow(@PathVariable Long id) {
         try {

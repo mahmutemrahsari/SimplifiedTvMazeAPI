@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-// Metoder for å hente data fra TVMaze API
+//en tjenesteklasse som bruker WebClient for å kommunisere med TVMaze API.
 
 @Service
 public class TVMazeService implements ITVMazeService {

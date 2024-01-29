@@ -5,18 +5,18 @@ import jakarta.validation.constraints.NotEmpty;
 
 import java.util.List;
 
-@Entity
-@Table(name = "shows")
+@Entity // Angir at klassen er en JPA-entitetsklasse.
+@Table(name = "shows") // Angir navnet på databasetabellen som denne entitetsklassen skal mappe til.
 public class Show {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //Definerer hvordan primærnøkkelen genereres.
     private Long id;
 
     @NotEmpty
     private String name;
 
-    @ElementCollection
+    @ElementCollection // Indikerer at genres-feltet er en samling av enkle verdier, og det skal være en separat tabell for denne samlingen.
     @CollectionTable(name = "show_genres", joinColumns = @JoinColumn(name = "show_id"))
     @Column(name = "genre")
     private List<@NotEmpty String> genres;

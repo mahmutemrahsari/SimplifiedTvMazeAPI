@@ -16,7 +16,7 @@ import reactor.core.publisher.Mono;
 import java.util.*;
 import java.util.stream.Collectors;
 
-// API-endepunkter
+// API-endepunkter for å hente data fra https://api.tvmaze.com
 @RestController
 @RequestMapping("/api/shows")
 public class TVMazeController implements ITVMazeController {
@@ -32,12 +32,12 @@ public class TVMazeController implements ITVMazeController {
     public Mono<Show> getShowById(@PathVariable @Valid @NotNull Long id) {
         return tvMazeService.getShowById(id);
     }
-
+    // henter ut alle showene 
     @GetMapping("/all")
     public Mono<Show[]> getAllShows() {
         return tvMazeService.getAllShows();
     }
-
+    // henter ut gitte antall showene som er sortert etter popularitet
     @GetMapping("/popular/{quantity}")
     public List<Show> getPopularShows(@PathVariable @Valid @NotNull int quantity) {
         List<Show> popShows = new ArrayList<>();
@@ -51,7 +51,7 @@ public class TVMazeController implements ITVMazeController {
             singleShow.setStatus(aShow.getStatus());
             popShows.add(singleShow);
         }
-        //sortert etter "weight" for å hente de meste populære showene
+        //sortert etter "weight" for å hente de meste populare showene
         popShows.sort(Comparator.comparing(Show::getWeight).reversed());
         if (quantity <= popShows.size()) {
             List<Show> portionOfShowArray = new ArrayList<>();
@@ -63,7 +63,7 @@ public class TVMazeController implements ITVMazeController {
             throw new  NotFoundException("Quantity of shows can't be more than " + popShows.size() + " Please lower the quantity!");
         }
     }
-
+    // henter ut showene gjennom gitte sjanger
     @GetMapping("/genre/{genre}")
     public List<Show> getShowsByGenre(@PathVariable @Valid @NotEmpty String genre) {
         String[] validGenres = {
