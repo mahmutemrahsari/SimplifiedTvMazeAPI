@@ -31,7 +31,7 @@ class TVMazeControllerTest {
 
     @BeforeEach
     void setUp() {
-        // Initialize a sample Show for testing
+        // Initialiser et eksempel på Show for testing
         sampleShow = new Show();
         sampleShow.setId(1L);
         sampleShow.setName("Sample Show");
@@ -42,10 +42,10 @@ class TVMazeControllerTest {
 
     @Test
     void testGetShowById() {
-        // Mock the service response
+        // Simuler tjenestesvaret
         when(tvMazeService.getShowById(1L)).thenReturn(Mono.just(sampleShow));
 
-        // Perform the GET request and verify the response
+        // Utfør GET-forespørselen og verifiser svaret
         webTestClient.get()
                 .uri("/api/shows/{id}", 1L)
                 .exchange()
@@ -56,10 +56,10 @@ class TVMazeControllerTest {
 
     @Test
     void testGetPopularShows() {
-        // Mock the service response for getAllShows
+        // Simuler tjenestesvaret for getAllShows
         when(tvMazeService.getAllShows()).thenReturn(Mono.just(new Show[]{sampleShow}));
 
-        // Perform the GET request and verify the response
+        // Utfør GET-forespørselen og verifiser svaret
         webTestClient.get()
                 .uri("/api/shows/popular/{quantity}", 1)
                 .exchange()
