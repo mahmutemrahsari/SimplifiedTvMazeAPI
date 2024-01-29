@@ -1,0 +1,38 @@
+ - Kan du beskrive noen av TV-Maze database tabeller?
+    + De tabellene TV-Maze kan ha som Show, Genre, Actor, osv.
+        + Show Table
+            -show_id (Primary Key)
+            -name
+        + Genre Table
+            -genre_id (Primary Key)
+            -genre
+        + Actor Table
+            -actor_id (Primary Key)
+            -name
+        + ShowGenre Table (Many-to-Many Relationship)
+            -show_id (Foreign Key refererer til Show tabellen)
+            -genre_id (Foreign Key refererer til Genre tabellen)
+
+- Kan du gi et eksempel på hvordan man henter informasjon fra flere tabeller samtidig?
+    + For å hente informasjon fra flere tabeller samtidig, kan vi bruke sql JOIN-operatoren. 
+        For eksempel, hvis vi vil hente informasjon om et show, inkludert dets sjangre, 
+        kan vi bruke en spørring med JOIN-operasjon:
+
+        select Show.show_id, Show.title, group_concat(Genre.name) as genres
+        from Show join ShowGenre on Show.show_id = ShowGenre.show_id
+        join Genre on ShowGenre.genre_id = Genre.genre_id where Show.show_id = 1;
+
+
+        Her henter vi informasjon om showet med ID 1, inkludert tittel og sjangrene det tilhører, 
+        ved å kombinere data fra Show, ShowGenre, og Genre-tabellene.
+
+- Er det store mengder data i disse tabeller, ønsker man ikke å vise alt samtidig. Hvordan kan dette løses?
+    + For store mengder data, begrenser vi antall rader returnert. Dette kan gjøres ved å bruke LIMIT-klausulen i SQL. 
+        For eksempel: 
+
+        select * from Show limit 10
+        
+        Det vil returnere kun de første 10 radene fra Show-tabellen.
+
+        
+    
